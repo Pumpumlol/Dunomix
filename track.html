@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Track Order - Dunomix</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body { padding: 2em; font-family: Arial, sans-serif; background: #fff; }
+    .order-box { background: #f0f0f0; padding: 1em; border-radius: 10px; }
+  </style>
+</head>
+<body>
+  <h2>Your Last Order</h2>
+  <div class="order-box" id="orderDetails"></div>
+
+  <script>
+    const order = JSON.parse(localStorage.getItem('lastOrder'));
+    const box = document.getElementById('orderDetails');
+
+    if (order) {
+      box.innerHTML = `
+        <p><strong>Name:</strong> ${order.name}</p>
+        <p><strong>Email:</strong> ${order.email}</p>
+        <p><strong>Date:</strong> ${order.date}</p>
+        <p><strong>Total:</strong> $${order.total}</p>
+        <h4>Items:</h4>
+        <ul>${order.items.map(item => `<li>${item.name} - $${item.price.toFixed(2)}</li>`).join('')}</ul>
+      `;
+    } else {
+      box.innerHTML = "<p>No recent order found.</p>";
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Verify Email</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+    }
+    main {
+      max-width: 400px;
+      margin: auto;
+      padding: 2em;
+      background: white;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    h2 {
+      margin-bottom: 1em;
+    }
+    input[type="text"] {
+      width: 100%;
+      padding: 0.5em;
+      margin-bottom: 1em;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    button {
+      width: 100%;
+      padding: 0.5em;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #218838;
+    }
+    .error-message {
+      color: red;
+      margin-top: 1em;
+    }
+  </style>
+</head>
+<body>
+
+<main>
+  <h2>Enter Verification Code</h2>
+  <label for="code">6-digit code</label>
+  <input type="text" id="code" placeholder="Enter your code" maxlength="6" required>
+  <div id="error-message" class="error-message"></div>
+  <button onclick="verify()">Verify</button>
+</main>
+
+<script>
+  function verify() {
+    const enteredCode = document.getElementById('code').value.trim();
+    const savedCode = localStorage.getItem('verificationCode');
+    const errorMessage = document.getElementById('error-message');
+
+    errorMessage.textContent = ''; // Clear previous error messages
+
+    // Validate the entered code
+    if (enteredCode.length !== 6 || isNaN(enteredCode)) {
+      errorMessage.textContent = "Please enter a valid 6-digit code.";
+      return;
+    }
+
+    if (enteredCode === savedCode) {
+      const email = localStorage.getItem('pendingEmail');
+      const password = localStorage.getItem('pendingPassword');
+
+      const userData = { email, password };
+      localStorage.setItem('userData', JSON.stringify(userData));
+      localStorage.setItem('isVerified', 'true');
+
+      // Cleanup
+      localStorage.removeItem('pendingEmail');
+      localStorage.removeItem('pendingPassword');
+      localStorage.removeItem('verificationCode');
+
+      alert("Email verified! You can now log in.");
+      window.location.href = "login.html";
+    } else {
+      errorMessage.textContent = "Invalid code. Please try again.";
+    }
+  }
+</script>
+
+</body>
+</html>

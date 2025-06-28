@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - Dunomix</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+    }
+    main {
+      max-width: 400px;
+      margin: auto;
+      padding: 2em;
+      background: white;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    h2 {
+      margin-bottom: 1em;
+    }
+    input {
+      width: 100%;
+      padding: 0.5em;
+      margin-bottom: 1em;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    button {
+      width: 100%;
+      padding: 0.5em;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #218838;
+    }
+    .error-message {
+      color: red;
+      margin-top: 1em;
+    }
+  </style>
+</head>
+<body>
+
+<main>
+  <h2>Login</h2>
+  <label for="email">Email</label>
+  <input type="email" id="email" placeholder="Email" required>
+  
+  <label for="password">Password</label>
+  <input type="password" id="password" placeholder="Password" required>
+  
+  <button onclick="login()">Login</button>
+  <p>Don't have an account? <a href="register.html">Register</a></p>
+  <p id="error-message" class="error-message"></p>
+</main>
+
+<script>
+  function validateEmail(email) {
+    const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return pattern.test(email);
+  }
+
+  function login() {
+    const email = document.getElementById('email').value.trim();
+    const password = document.getElementById('password').value.trim();
+    const errorMessage = document.getElementById('error-message');
+
+    errorMessage.textContent = ''; // Clear previous error messages
+
+    if (!validateEmail(email)) {
+      errorMessage.textContent = "Invalid email format.";
+      return;
+    }
+
+    const isVerified = localStorage.getItem('isVerified');
+    const savedUser  = JSON.parse(localStorage.getItem('userData'));
+
+    if (!isVerified || !savedUser  || savedUser .email !== email) {
+      errorMessage.textContent = "No account found or email not verified.";
+      return;
+    }
+
+ if (savedUser.password !== password) {
+  alert("Incorrect password.");
+  return;
+}
+
+localStorage.setItem('isLoggedIn', 'true');
+alert("Login successful!");
+window.location.href = "index.html";  // ← This should redirect
+
+  }
+</script>
+
+</body>
+</html>

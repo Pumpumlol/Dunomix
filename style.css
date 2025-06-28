@@ -1,0 +1,156 @@
+/* General styles */
+body {
+  font-family: 'Segoe UI', sans-serif;
+  margin: 0;
+  background: #f4f7fb;
+  color: #333;
+}
+
+/* Header bar */
+header {
+  background: #007bff;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1em;
+}
+
+/* Clickable logo */
+.logo {
+  font-size: 1.5em;
+  font-weight: bold;
+  text-decoration: none;
+  color: white;
+}
+
+.logo:hover {
+  opacity: 0.9;
+  cursor: pointer;
+}
+
+/* Search input */
+header input {
+  padding: 0.5em;
+  width: 40%;
+  border-radius: 5px;
+  border: none;
+  outline: none;
+}
+
+/* Cart display */
+.cart {
+  background: white;
+  color: #007bff;
+  padding: 0.5em 1em;
+  border-radius: 20px;
+  font-weight: bold;
+}
+
+/* Navigation bar */
+nav {
+  background: #0056b3;
+  padding: 0.5em;
+  text-align: center;
+}
+
+nav a {
+  color: white;
+  margin: 0 1em;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+nav a:hover {
+  text-decoration: underline;
+}
+
+/* Main content area */
+main {
+  padding: 2em;
+}
+
+/* Product grid layout */
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1.5em;
+}
+
+/* Individual product cards */
+.product-card {
+  background: white;
+  padding: 1em;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease;
+}
+
+.product-card:hover {
+  transform: translateY(-5px);
+}
+
+/* Product images */
+.product-card img {
+  width: 100%;
+  border-radius: 8px;
+  margin-bottom: 0.5em;
+}
+
+/* Buttons */
+.product-card button {
+  background: #007bff;
+  color: white;
+  border: none;
+  padding: 0.5em 1em;
+  margin: 0.3em;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.product-card button:hover {
+  background: #0056b3;
+}
+
+/* Footer */
+footer {
+  background: #eee;
+  text-align: center;
+  padding: 1em;
+  margin-top: 2em;
+  font-size: 0.9em;
+  color: #666;
+}
+
+/* Responsive tweaks */
+@media (max-width: 600px) {
+  header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  header input {
+    width: 100%;
+    margin-top: 0.5em;
+  }
+
+/* Cart display */
+/* Cart display (clickable) */
+.cart {
+  background: white;
+  color: #007bff;
+  padding: 0.5em 1em;
+  border-radius: 20px;
+  font-weight: bold;
+  text-decoration: none;   /* Remove underline if it's a link */
+  display: inline-block;
+  transition: background 0.2s ease;
+}
+
+.cart:hover {
+  background: #e6f0ff;
+  cursor: pointer;
+}
+}

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product Details</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #28a745;
+      color: white;
+      padding: 1em;
+    }
+    .logo {
+      font-size: 1.5em;
+    }
+    input[type="text"] {
+      padding: 0.5em;
+      border: none;
+      border-radius: 4px;
+      width: 300px;
+    }
+    .cart {
+      font-size: 1.2em;
+    }
+    main {
+      padding: 2em;
+      max-width: 800px;
+      margin: auto;
+      background: white;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    h2 {
+      margin-bottom: 1em;
+    }
+    img {
+      max-width: 100%;
+      border-radius: 10px;
+    }
+    button {
+      padding: 0.5em 1em;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #218838;
+    }
+    .success-message {
+      color: green;
+      margin-top: 1em;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <a href="index.html" class="logo">🛒 Dunomix</a>
+🛒 Dunomix</div>
+  <input type="text" placeholder="Search products..." aria-label="Search products">
+  <a href="cart.html" class="cart">Cart (0)</a>
+</header>
+
+<main>
+  <h2 id="product-name">Product Name</h2>
+  <img id="product-img" src="https://via.placeholder.com/300" alt="Product Image">
+  <p id="product-price">$19.99</p>
+  <p id="product-desc">This is a detailed description of the product.</p>
+  <button onclick="addToCartFromDetails()">Add to Cart</button>
+  <div id="success-message" class="success-message"></div>
+</main>
+
+<script>
+  // This can later be dynamic
+  const product = {
+    name: "Product Name",
+    price: 19.99,
+    desc: "This is a detailed description of the product.",
+    image: "https://via.placeholder.com/300"
+  };
+
+  // Fill the page
+  document.getElementById('product-name').textContent = product.name;
+  document.getElementById('product-img').src = product.image;
+  document.getElementById('product-price').textContent = `$${product.price.toFixed(2)}`;
+  document.getElementById('product-desc').textContent = product.desc;
+
+  // Cart logic
+  let cart = [];
+  function addToCartFromDetails() {
+    cart.push(product);
+    localStorage.setItem('cart', JSON.stringify(cart));
+    document.getElementById('success-message').textContent = `${product.name} added to cart!`;
+    updateCartDisplay();
+  }
+
+  function updateCartDisplay() {
+    const cartDisplay = document.querySelector('.cart');
+    cartDisplay.textContent = `Cart (${cart.length})`;
+  }
+
+  // Restore cart
+  window.onload = () => {
+    const savedCart = localStorage.getItem('cart');
+    if (savedCart) {
+      cart = JSON.parse(savedCart);
+      updateCartDisplay();
+    }
+  };
+</script>
+
+</body>
+</html>

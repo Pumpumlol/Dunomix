@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Dunomix</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #28a745;
+      color: white;
+      padding: 1em;
+    }
+    .logo {
+      font-size: 1.5em;
+    }
+    input[type="text"] {
+      padding: 0.5em;
+      border: none;
+      border-radius: 4px;
+      width: 300px;
+    }
+    .cart {
+      font-size: 1.2em;
+    }
+    nav {
+      background-color: #fff;
+      padding: 1em;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+    nav a {
+      margin: 0 1em;
+      text-decoration: none;
+      color: #333;
+    }
+    main {
+      padding: 2em;
+      max-width: 800px;
+      margin: auto;
+      background: white;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    .product-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1em;
+    }
+    .product-card {
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      padding: 1em;
+      text-align: center;
+      width: calc(50% - 1em);
+    }
+    button {
+      padding: 0.5em 1em;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #218838;
+    }
+    footer {
+      text-align: center;
+      padding: 1em;
+      background-color: #28a745;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+ <a href="index.html" class="logo">🛒 Dunomix</a>
+    <input type="text" placeholder="Search products..." aria-label="Search products">
+    <a href="cart.html" class="cart">Cart (0)</a>
+  </header>
+
+  <!-- Navigation -->
+  <nav id="nav">
+    <a href="#">Home</a>
+    <a href="#">Products</a>
+    <a href="login.html" id="auth-link">Login</a>
+  </nav>
+
+  <!-- Main Product Grid -->
+  <main>
+    <h2>Featured Products</h2>
+    <div class="product-grid">
+
+      <div class="product-card">
+        <img src="https://via.placeholder.com/150" alt="Product 1">
+        <h3>Product Name</h3>
+        <p>$19.99</p>
+        <button onclick="addToCart('Product Name', 19.99)">Add to Cart</button>
+        <a href="product.html"><button>View</button></a>
+      </div>
+
+      <div class="product-card">
+        <img src="https://via.placeholder.com/150" alt="Product 2">
+        <h3>Another Item</h3>
+        <p>$29.99</p>
+        <button onclick="addToCart('Another Item', 29.99)">Add to Cart</button>
+        <a href="product.html"><button>View</button></a>
+      </div>
+
+    </div>
+  </main>
+
+  <footer>
+    &copy; 2025 Dunomix. All rights reserved.
+  </footer>
+
+  <script>
+    let cart = [];
+
+    function addToCart(name, price) {
+      cart.push({ name, price });
+      updateCartDisplay();
+      // Instead of alert, consider using a success message display
+      const successMessage = document.createElement('div');
+      successMessage.textContent = `${name} added to cart!`;
+      successMessage.style.color = 'green';
+      document.body.appendChild(successMessage);
+      setTimeout(() => successMessage.remove(), 3000); // Remove message after 3 seconds
+      localStorage.setItem('cart', JSON.stringify(cart));
+    }
+
+    function updateCartDisplay() {
+      const cartDisplay = document.querySelector('.cart');
+      cartDisplay.textContent = `Cart (${cart.length})`;
+    }
+
+    function checkLogin() {
+      const isLoggedIn = localStorage.getItem('isLoggedIn');
+
+      if (isLoggedIn !== 'true') {
+        alert("Please log in to access your dashboard.");
+        window.location.href = "login.html";
+        return;
+      }
+
+      // If logged in, update nav to show logout
+      const authLink = document.getElementById('auth-link');
+      authLink.textContent = "Logout";
+      authLink.href = "#";
+      authLink.onclick = () => {
+        localStorage.removeItem('isLoggedIn');
+        alert("Logged out.");
+        window.location.href = "login.html";
+      };
+    }
+
+    window.onload = () => {
+      checkLogin();
+
+      const savedCart = localStorage.getItem('cart');
+      if (savedCart) {
+        cart = JSON.parse(savedCart);
+        updateCartDisplay();
+      }
+    };
+  </script>
+  
+  <script type="module">
+    import "./firebase.js";
+
+    onAuthStateChanged(auth, (user) => {
+      if (!user) {
+        alert("You must be logged in to view this page.");
+        window.location.href = "login.html";
+      }
+    });
+  </script>
+
+</body>
+</html>
